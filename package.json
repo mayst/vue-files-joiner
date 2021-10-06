@@ -1,0 +1,23 @@
+{
+  "name": "vue-files-joiner",
+  "version": "1.0.0",
+  "description": "joins splitted vue files into a single .vue file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mayst/vue-files-joiner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayst/vue-files-joiner/issues"
+  },
+  "homepage": "https://github.com/mayst/vue-files-joiner#readme",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
+}
