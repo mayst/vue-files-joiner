@@ -1,5 +1,5 @@
 const FolderService = require('./folder-service');
-const {BLUE, YELLOW} = require("../constants/log-colors");
+const {BLUE, YELLOW, WHITE} = require("../constants/log-colors");
 
 class StatisticsService {
     watchPath;
@@ -20,9 +20,17 @@ class StatisticsService {
     }
 
     logResult(statistics) {
-        statistics.forEach(({length}, range) => {
+        let index = 0;
+
+        statistics.forEach((stat, range) => {
             console.log(YELLOW(`LINES RANGE: [${range[0]}-${range[1]}]`));
-            console.log('components count:', length);
+            console.log('components count:', stat.length);
+
+            if (index >= statistics.size - 2) {
+                stat.forEach(({ files }) => console.log(WHITE('    component:', files[0].replace(/^(.+)\/src\//, ''))));
+            }
+
+            index++;
         });
     }
 

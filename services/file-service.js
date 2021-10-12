@@ -20,11 +20,11 @@ class FileService {
 
             if (files.includes(fileSass)) {
                 const sassPath = `${folder}/${fileSass}`;
-                // const sassLines = await this.getLinesCount(sassPath);
+                const sassLines = await this.getLinesCount(sassPath);
 
-                // if (sassLines < 100) {
-                componentFiles.push(sassPath);
-                // }
+                if (sassLines < 100) {
+                    componentFiles.push(sassPath);
+                }
             }
 
             return componentFiles;
