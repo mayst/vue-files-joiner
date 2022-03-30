@@ -1,0 +1,107 @@
+.verification {
+  color: var(--v-primary-base);
+
+  &__checkbox .payroll-field__label {
+    color: var(--v-primary-base) !important;
+    font-size: $font-md;
+  }
+
+  &__btn {
+    &-trust-computer {
+      .payroll-field__label {
+        padding-inline-start: 0;
+      }
+    }
+  }
+
+  &__login-recaptcha {
+    position: relative;
+
+    &-card {
+      padding: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 0 rgba(186, 199, 220, 0.8);
+      z-index: 2;
+      background: white;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, calc(-100% - 10px));
+      position: absolute;
+    }
+  }
+
+  &__change-auth {
+    position: relative;
+  }
+
+  .change-auth-method {
+    &__content {
+      border-radius: 10px;
+      box-shadow: 0 0 10px 0 rgba(186, 199, 220, 0.8);
+      z-index: 1;
+      background: var(--v-tertiary-base);
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, calc(-100% - 10px));
+      position: absolute;
+      &::after {
+        content: '';
+        background-color: var(--v-tertiary-base);
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        bottom: 7px;
+        left: 50%;
+        transform: translate(-50%, calc(100%)) rotate(45deg);
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+      }
+    }
+
+    &__text {
+      font-size: $font-xsm;
+      color: var(--v-primary-base);
+      text-align: center;
+    }
+
+    &__btn {
+      position: relative;
+
+      .button__img {
+        border-radius: 50%;
+        background: var(--v-secondary-base);
+        padding: 5px;
+      }
+
+      .button__prepend-icon,
+      .button__img {
+        position: absolute;
+        left: -30px;
+      }
+
+      .button__text {
+        position: absolute;
+        left: 10px;
+      }
+    }
+  }
+
+  .checkbox {
+    .payroll-field__label {
+      padding-inline-start: 0;
+    }
+  }
+}
+
+.v-application.v-application--is-rtl {
+  .change-auth-method {
+    .button__prepend-icon,
+    .button__img {
+      left: 50px;
+    }
+
+    .button__text {
+      position: absolute;
+      left: -10px;
+    }
+  }
+}

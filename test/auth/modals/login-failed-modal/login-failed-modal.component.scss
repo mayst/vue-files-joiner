@@ -1,0 +1,10 @@
+.login-failed {
+  &__title {
+    font-weight: 700;
+    font-size: $font-xxlg;
+  }
+
+  &__actions {
+    width: 100%;
+  }
+}

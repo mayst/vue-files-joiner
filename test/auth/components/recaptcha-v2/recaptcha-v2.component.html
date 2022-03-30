@@ -1,0 +1,4 @@
+<div class="recaptcha">
+  <vue-recaptcha :sitekey="siteKey" @verify="verify" @expired="expired"></vue-recaptcha>
+  <div class="auth__recaptcha--error py-1" v-if="hasError">{{ $t('AUTH.VERIFY_YOU_ARE_NOT_A_ROBOT') }}</div>
+</div>

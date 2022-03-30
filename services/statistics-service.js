@@ -1,17 +1,31 @@
 const FolderService = require('./folder-service');
+const FileService = require('./file-service');
 const {BLUE, YELLOW, WHITE} = require("../constants/log-colors");
 
 class StatisticsService {
     watchPath;
     folderService = new FolderService();
+    fileService = new FileService();
     ranges = [[0, 100], [101, 150], [151, 200], [201, 250], [251, 300], [301, 10000]];
 
     constructor(watchPath) {
         this.watchPath = watchPath;
     }
 
+    // TODO: move somewhere
+    async getFilesCallback(folderPath, file) {
+        if (this.fileService.isVueFile(file.name)) {
+            // const fileBuffer = fs.readFileSync(filesPath);
+            // const charsetMatch = detectCharacterEncoding(fileBuffer);
+
+            // console.log(file.name, charsetMatch);
+
+            await this.folderService.addVueFiles(folderPath, file);
+        }
+    }
+
     async makeStatistics() {
-        await this.folderService.getAllFiles(this.watchPath);
+        await this.folderService.getAllFiles(this.watchPath, this.getFilesCallback);
 
         console.log(BLUE('COMPONENTS TOTAL COUNT:', this.folderService.vueFiles.length));
 

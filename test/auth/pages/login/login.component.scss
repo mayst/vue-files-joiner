@@ -1,0 +1,12 @@
+.login {
+  min-width: 330px;
+
+  &__field {
+    min-width: 330px;
+    max-width: 350px;
+  }
+
+  &__error {
+    max-width: 450px;
+  }
+}

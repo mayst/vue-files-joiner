@@ -1,14 +1,24 @@
 const fs = require('fs');
+const path = require('path');
 const FileService = require('./file-service');
+const detectCharacterEncoding = require('detect-character-encoding');
 
 class FolderService {
     vueFiles = [];
     ignoreList = ['node_modules'];
     fileService = new FileService();
 
-    async getAllFiles(folderPath) {
-        if (!fs.existsSync(folderPath)) {
-            throw new Error('Can`t find needed folder.');
+    async fileExists(file) {
+        return new Promise((res) => {
+            fs.access(file, fs.constants.F_OK, (err) => {
+                res(!err);
+            });
+        })
+    }
+
+    async getAllFiles(folderPath, callback) {
+        if (!await this.fileExists(folderPath)) {
+            throw new Error(`${folderPath} does not exist`);
         }
 
         if (this.ignoreList.some(ignorePattern => new RegExp(ignorePattern).test(folderPath))) {
@@ -21,9 +31,9 @@ class FolderService {
             const filesPath = `${folderPath}/${file.name}`;
 
             if (file.isDirectory()) {
-                await this.getAllFiles(filesPath);
-            } else if (this.fileService.isVueFile(file.name)) {
-                await this.addVueFiles(folderPath, file);
+                await this.getAllFiles(filesPath, callback);
+            } else {
+                await callback(folderPath, file);
             }
         }));
     }
@@ -41,6 +51,22 @@ class FolderService {
 
             this.vueFiles.push(componentData);
         }
+    }
+
+    moveFilesHigherLvl(files, folderPath) {
+        return Promise.all(files.map(async file => {
+            const oldPath = `${folderPath}/${file}`;
+            const newPath = `${path.join('..', folderPath)}/${file}`;
+
+            if (await this.fileExists(newPath)) {
+                console.log('SHOULD DO SMTH WITH DUPLICATION OF FILES');
+            } else {
+                fs.rename(oldPath, newPath, function (err) {
+                    if (err) throw err;
+                    console.log('Successfully renamed - AKA moved!');
+                })
+            }
+        }));
     }
 }
 

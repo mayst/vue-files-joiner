@@ -6,5 +6,12 @@ to join files like SFC.
 
 ``npm i``
 
-## Run tool
-``npm run start <path_to_projects_folder>``
+## Commands
+
+### check files statistics
+
+``npm run scan <path_to_projects_folder>``
+
+### join files like SFC
+
+``npm run join <path_to_projects_folder>``

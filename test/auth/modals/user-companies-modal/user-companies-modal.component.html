@@ -1,0 +1,29 @@
+<payroll-modal-form
+  :title="$t('AUTH.USER_COMPANIES')"
+  name="user-companies"
+  :errors="error"
+  :loading="loading"
+  :is-saving="loading"
+  :open-event="openEvent"
+  :close-event="closeEvent"
+  @submit="save"
+>
+  <template v-slot:content>
+    <div class="hrm-height-180 hrm-width-400">
+      <validation-provider v-slot="{ errors }" name="AUTH.SELECT_USER_COMPANY" rules="required">
+        <payroll-select
+          class="hrm-height-37"
+          v-if="companies"
+          v-model="indexNum"
+          label="AUTH.SELECT_USER_COMPANY"
+          placeholder="AUTH.SELECT_USER_COMPANY"
+          item-text="indexName"
+          item-value="indexNum"
+          :error-messages="errors"
+          :items="companies"
+        >
+        </payroll-select>
+      </validation-provider>
+    </div>
+  </template>
+</payroll-modal-form>

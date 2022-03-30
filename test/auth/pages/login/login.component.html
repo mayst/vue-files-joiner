@@ -1,0 +1,82 @@
+<div class="login">
+  <div class="d-flex justify-center align-center">
+    <payroll-error-alert class="login__error" hide-title :errors="errorsMessages"></payroll-error-alert>
+  </div>
+  <div class="auth__title font-weight-light d-flex justify-center mb-6">
+    {{ $t('AUTH.LOGIN') }}
+  </div>
+  <div v-if="!showVerificationCodeField">
+    <div class="px-0 d-flex flex-row justify-center align-center flex-column">
+      <ValidationObserver ref="observerRef">
+        <ValidationProvider name="AUTH.ID_NUMBER" :rules="{ required: true, numeric: true, max: 9, min: 7, id_number: true }" v-slot="{ errors }">
+          <payroll-text-field
+            data-cy="id-number"
+            class="login__field my-3"
+            type="text"
+            autofocus
+            clearable
+            placeholder="AUTH.ID_NUMBER"
+            label="AUTH.ID_NUMBER"
+            :value="loginData.idNumber"
+            :hideDetails="false"
+            :error-messages="errors"
+            @input="onSearchInput($event,'idNumber')"
+          >
+          </payroll-text-field>
+        </ValidationProvider>
+        <ValidationProvider name="AUTH.PASSWORD" :rules="{ required: true, max:16 }" v-slot="{ errors }">
+          <payroll-text-field
+            data-cy="password"
+            class="login__field my-3"
+            clearable
+            placeholder="AUTH.PASSWORD"
+            label="AUTH.PASSWORD"
+            :value="loginData.password"
+            :type="showPassword ? 'text' : 'password'"
+            :append-icon="showPassword ? icons.EYE_ICON : icons.EYE_SLASH_ICON"
+            :hideDetails="false"
+            :error-messages="errors"
+            @input="onSearchInput($event,'password')"
+            @click:append="showPassword = !showPassword"
+            @keyup.native.enter="login"
+          >
+          </payroll-text-field>
+        </ValidationProvider>
+      </ValidationObserver>
+
+      <div v-if="isRecaptchaV2Shown" class="auth__recaptcha py-3">
+        <vue-recaptcha :sitekey="recaptchaV2SiteKey" @verify="verifyRecaptchaV2" @expired="expiredRecaptchaV2"></vue-recaptcha>
+        <div v-if="doesRecaptchaV2HaveError" class="auth__recaptcha--error py-1">{{ $t('AUTH.VERIFY_YOU_ARE_NOT_A_ROBOT') }}</div>
+      </div>
+
+      <div class="d-flex justify-center align-center mt-0">
+        <span class="auth__text">{{ $t('AUTH.FORGOT_YOUR_PASSWORD') }}</span>
+        <payroll-button
+          data-cy="forgot-password"
+          class="login__forgot-password--btn px-1"
+          isText
+          color="secondary"
+          text="AUTH.CLICK_HERE"
+          :classArr="['underlined-text']"
+          @click="forgotPassword"
+        >
+        </payroll-button>
+      </div>
+    </div>
+    <div class="d-flex justify-center align-center flex-column">
+      <payroll-button
+        data-cy="login-btn"
+        class="login-btn mt-10 mb-5"
+        secondary
+        width="200"
+        text="AUTH.SIGN_IN"
+        :disabled="loading"
+        :loading="loading"
+        @click="login"
+      ></payroll-button>
+    </div>
+  </div>
+  <div v-else>
+    <payroll-two-factor-authentication :login-payload="loginData"></payroll-two-factor-authentication>
+  </div>
+</div>
